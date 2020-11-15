@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/prvni-vlastovka-kalkulacka/static/js/main.0eff8d8a.chunk.js",
-    "main.js.map": "/prvni-vlastovka-kalkulacka/static/js/main.0eff8d8a.chunk.js.map",
+    "main.js": "/prvni-vlastovka-kalkulacka/static/js/main.c4b6198d.chunk.js",
+    "main.js.map": "/prvni-vlastovka-kalkulacka/static/js/main.c4b6198d.chunk.js.map",
     "runtime-main.js": "/prvni-vlastovka-kalkulacka/static/js/runtime-main.e5f3feac.js",
     "runtime-main.js.map": "/prvni-vlastovka-kalkulacka/static/js/runtime-main.e5f3feac.js.map",
     "static/js/2.fea8a26f.chunk.js": "/prvni-vlastovka-kalkulacka/static/js/2.fea8a26f.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.e5f3feac.js",
     "static/js/2.fea8a26f.chunk.js",
-    "static/js/main.0eff8d8a.chunk.js"
+    "static/js/main.c4b6198d.chunk.js"
   ]
 }
