@@ -8,6 +8,11 @@ export default function AllAtOnce({ values }) {
   interest = parseInt(interest, 10);
   duration = parseInt(duration, 10);
 
+  let durationWord;
+  if (duration === 1) durationWord = 'rok';
+  else if (duration === 2) durationWord = 'roky';
+  else durationWord = 'let';
+
   const repayment = Math.ceil(amount + amount * (interest / 100));
 
   return (
@@ -23,7 +28,9 @@ export default function AllAtOnce({ values }) {
       {' '}
       {duration}
       {' '}
-      let včetně úroku
+      {durationWord}
+      {' '}
+      včetně úroku
       {' '}
       {interest}
       %, celkem tedy
