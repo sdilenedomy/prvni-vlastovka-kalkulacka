@@ -9,8 +9,8 @@ import ContinuousRepayment from './ContinuousRepayment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '100%',
-    paddingLeft: theme.spacing(2),
+    width: 'min-content',
+    margin: [theme.spacing(3.25), theme.spacing(2), 0, theme.spacing(1), ''].join('px '),
   },
   results: {
     padding: theme.spacing(2),
@@ -36,7 +36,7 @@ export default function Results({ values }) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root} flexGrow={3}>
+    <Box className={classes.root} flexGrow="3">
       <Paper className={classes.results}>
         <Box display="flex" flexDirection="column" className={classes.body}>
 

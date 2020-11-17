@@ -10,7 +10,7 @@ import Fields from './Fields';
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 'max-content',
-    maxWidth: '40%',
+    margin: [theme.spacing(3.25), theme.spacing(1), 0, theme.spacing(2), ''].join('px '),
   },
   calculator: {
     height: '100%',
@@ -64,6 +64,7 @@ export default function Calculator({
             alignItems="flex-end"
             flexGrow="1"
           >
+            {/* TODO: display "results will be updated automatically" if results are shown */}
             {!resultsShown && <Button onClick={handleSubmit(onSubmit)}>Spočítat</Button>}
           </Box>
 

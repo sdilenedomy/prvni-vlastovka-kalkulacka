@@ -206,7 +206,7 @@ function prevedNaSlovo(cislo) {
       slovne = `${radSlovne(pomocneCislo % 1000, rad)}${slovne}`;
     }
 
-    // Úprava na finanční číslovku - přidání slova "jeden", "jedna" (jednmilion, jednamiliarda)
+    // Úprava na finanční číslovku - přidání slova "jeden", "jedna" (jedenmilion, jednamiliarda)
     if (analyza === 1 && rad > 0) {
       if (rad % 2 === 0 || rad === 1) {
         // jedentisíc, jedenmilión, ...

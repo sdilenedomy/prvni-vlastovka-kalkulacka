@@ -7,8 +7,7 @@ import Results from './Components/Results';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
   },
 }));
 
@@ -30,8 +29,7 @@ function App() {
       <Box
         className={classes.root}
         display="flex"
-        justifyContent="space-evenly"
-        // flexWrap="wrap"
+        flexWrap="wrap"
       >
         <Calculator
           onSubmit={handleSubmit}
