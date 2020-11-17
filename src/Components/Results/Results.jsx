@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Box, Button, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import amountToWords from '../../Utils/amountToWords';
 import AllAtOnce from './AllAtOnce';
 import ContinuousRepayment from './ContinuousRepayment';
 
@@ -35,12 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Results({ values }) {
   const classes = useStyles();
-
-  const [amountSpelled, setAmountSpelled] = useState('');
-
-  useEffect(() => {
-    setAmountSpelled(amountToWords(values.amount));
-  }, [amountSpelled, values.amount]);
 
   return (
     <Box className={classes.root} flexGrow={3}>
