@@ -30,6 +30,7 @@ function App() {
         className={classes.root}
         display="flex"
         flexWrap="wrap"
+        justifyContent="center"
       >
         <Calculator
           onSubmit={handleSubmit}

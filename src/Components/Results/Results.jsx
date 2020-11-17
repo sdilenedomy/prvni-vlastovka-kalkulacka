@@ -10,7 +10,7 @@ import ContinuousRepayment from './ContinuousRepayment';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 'min-content',
-    margin: [theme.spacing(3.25), theme.spacing(2), 0, theme.spacing(1), ''].join('px '),
+    margin: [theme.spacing(3.25), theme.spacing(2), 0, theme.spacing(2), ''].join('px '),
   },
   results: {
     padding: theme.spacing(2),

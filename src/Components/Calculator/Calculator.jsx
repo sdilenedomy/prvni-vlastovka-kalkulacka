@@ -10,7 +10,10 @@ import Fields from './Fields';
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 'max-content',
-    margin: [theme.spacing(3.25), theme.spacing(1), 0, theme.spacing(2), ''].join('px '),
+    margin: [theme.spacing(3.25), theme.spacing(2), 0, theme.spacing(2), ''].join('px '),
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '40%',
+    },
   },
   calculator: {
     height: '100%',
