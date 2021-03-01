@@ -29,12 +29,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Calculator({
-  resultsShown, onSubmit,
+  resultsShown,
+  onSubmit,
 }) {
   const classes = useStyles();
 
   const {
-    register, handleSubmit, setValue, errors,
+    register,
+    handleSubmit,
+    setValue,
+    errors,
   } = useForm();
 
   function handleFieldChange() {
@@ -67,8 +71,11 @@ export default function Calculator({
             alignItems="flex-end"
             flexGrow="1"
           >
-            {/* TODO: display "results will be updated automatically" if results are shown */}
-            {!resultsShown && <Button onClick={handleSubmit(onSubmit)}>Spočítat</Button>}
+            {resultsShown ? (
+              <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
+            ) : (
+              <Button onClick={handleSubmit(onSubmit)}>Spočítat</Button>
+            )}
           </Box>
 
         </Box>

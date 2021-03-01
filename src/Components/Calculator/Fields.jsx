@@ -17,24 +17,16 @@ export default function Fields({
 
   const radioFields = [
     {
-      label: 'Frekvence splátek',
-      name: 'frequency',
+      label: 'Typ úroku',
+      name: 'interest_type',
       options: [
         {
-          label: 'Měsíční',
-          value: 'monthly',
-        },
-        {
-          label: 'Čtvrtletní',
-          value: 'quarterly',
-        },
-        {
-          label: 'Roční',
+          label: 'Roční úročení',
           value: 'yearly',
         },
         {
-          label: 'Vše na konci',
-          value: 'all',
+          label: 'Jednorázový úrok',
+          value: 'one-time',
         },
       ],
     },
@@ -47,16 +39,28 @@ export default function Fields({
           value: '0',
         },
         {
+          label: '0.5%',
+          value: '0.5',
+        },
+        {
           label: '1%',
           value: '1',
+        },
+        {
+          label: '1.5%',
+          value: '1.5',
         },
         {
           label: '2%',
           value: '2',
         },
         {
-          label: '5%',
-          value: '5',
+          label: '2.5%',
+          value: '2.5',
+        },
+        {
+          label: '3%',
+          value: '3',
         },
       ],
     },
