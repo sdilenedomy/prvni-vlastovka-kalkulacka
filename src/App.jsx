@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import Calculator from './Components/Calculator';
 import Results from './Components/Results';
 
@@ -24,7 +25,7 @@ function App() {
   }
 
   return (
-    <>
+    <SnackbarProvider maxSnack={1}>
       <CssBaseline />
       <Box
         className={classes.root}
@@ -38,7 +39,7 @@ function App() {
         />
         {resultsShown && <Results values={values} />}
       </Box>
-    </>
+    </SnackbarProvider>
   );
 }
 

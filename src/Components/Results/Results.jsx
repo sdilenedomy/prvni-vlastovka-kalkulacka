@@ -15,6 +15,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { useSnackbar } from 'notistack';
 import loanResultSummary from '../../Utils/loanResultSummary';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line no-unused-vars
 export default function Results({ values }) {
   const classes = useStyles();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [submitOfferDialogOpen, setSubmitOfferDialogOpen] = useState(false);
   const {
@@ -85,15 +87,18 @@ export default function Results({ values }) {
       })
         .then((r) => {
           if (r.ok) {
-            alert('Nabídka byla odeslána');
+            enqueueSnackbar('Nabídka byla odeslána', { variant: 'success' });
             closeOfferSubmitDialog();
           } else {
-            alert('Došlo k chybě. Zkuste to prosím později');
+            enqueueSnackbar('Došlo k chybě, zkuste to prosím později', { variant: 'error' });
             resetHCaptcha();
           }
+        }).catch(() => {
+          enqueueSnackbar('Došlo k chybě, zkuste to prosím později', { variant: 'error' });
+          resetHCaptcha();
         });
     } else {
-      alert('Vyplňte prosím hCapthu');
+      enqueueSnackbar('Vyplňte prosím hCapthu', { variant: 'error' });
     }
   }
 
@@ -136,7 +141,7 @@ export default function Results({ values }) {
             Pokud chcete nezávazně odeslat nabídku družstvu, zadejte prosím svůj email.
           </DialogContentText>
 
-          <form id="submit-offer-form" onSubmit={handleSubmit(onOfferSubmit)}>
+          <form id="submit-offer-form" onSubmit={handleSubmit(onOfferSubmit)} noValidate>
             <TextField
               autoFocus
               variant="outlined"
@@ -146,7 +151,8 @@ export default function Results({ values }) {
               fullWidth
               inputRef={register({
                 required: 'Zadejte prosím svou emailovou adresu',
-                pattern: /^[^\\s@]+@[^\\s@]+$/,
+                // eslint-disable-next-line no-control-regex
+                pattern: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
               })}
               error={!!errors.email}
               helperText={errors.email ? errors.email.message : ''}
