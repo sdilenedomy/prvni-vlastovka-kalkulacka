@@ -35,31 +35,31 @@ export default function Fields({
       name: 'interest',
       options: [
         {
-          label: '0%',
+          label: '0 %',
           value: '0',
         },
         {
-          label: '0.5%',
+          label: '0.5 %',
           value: '0.5',
         },
         {
-          label: '1%',
+          label: '1 %',
           value: '1',
         },
         {
-          label: '1.5%',
+          label: '1.5 %',
           value: '1.5',
         },
         {
-          label: '2%',
+          label: '2 %',
           value: '2',
         },
         {
-          label: '2.5%',
+          label: '2.5 %',
           value: '2.5',
         },
         {
-          label: '3%',
+          label: '3 %',
           value: '3',
         },
       ],
