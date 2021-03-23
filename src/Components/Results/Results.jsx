@@ -124,7 +124,7 @@ export default function Results({ values }) {
               flexGrow="1"
             >
               <div className={classes.buttonPadding}>
-                <a href="smlouva.odt">
+                <a href="smlouva.odt" style={{ 'text-decoration': 'none' }}>
                   <Button>Stáhnout smlouvu</Button>
                 </a>
               </div>
