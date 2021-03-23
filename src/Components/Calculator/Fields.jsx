@@ -98,7 +98,7 @@ export default function Fields({
         type="number"
         error={!!errors.amount}
         helperText={errors.amount ? errors.amount.message : ''}
-        inputRef={register({ required: 'Zadejte prosím částku' })}
+        inputRef={register({ required: 'Zadejte prosím částku', min: { value: 5000, message: 'Minimální částka je 5000 Kč' } })}
         InputProps={{ endAdornment: <InputAdornment position="end">Kč</InputAdornment> }}
         onChange={onChange}
       />
