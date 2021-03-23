@@ -124,7 +124,9 @@ export default function Results({ values }) {
               flexGrow="1"
             >
               <div className={classes.buttonPadding}>
-                <Button disabled>Stáhnout smlouvu</Button>
+                <a href="smlouva.odt">
+                  <Button>Stáhnout smlouvu</Button>
+                </a>
               </div>
               <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
             </Box>
