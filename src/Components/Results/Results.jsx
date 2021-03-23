@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useSnackbar } from 'notistack';
-import loanResultSummary from '../../Utils/loanResultSummary';
+import ResultsSummary from './ResultsSummary';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
   },
   resultsText: {
-    hyphens: 'auto',
     padding: theme.spacing(2),
   },
   captcha: {
@@ -115,7 +114,7 @@ export default function Results({ values }) {
             </Paper>
 
             <div className={classes.resultsText}>
-              {loanResultSummary(values)}
+              <ResultsSummary values={values} />
             </div>
 
             <Box

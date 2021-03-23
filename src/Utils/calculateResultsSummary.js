@@ -1,6 +1,4 @@
-import amountToWords from './amountToWords';
-
-export default function loanResultSummary(values) {
+export default function calculateResultsSummary(values) {
   let {
     amount,
     interest,
@@ -33,5 +31,9 @@ export default function loanResultSummary(values) {
   const actualInterest = interestType === 'yearly' ? interest * duration : interest;
   const total = Math.ceil(amount + amount * (actualInterest / 100));
 
-  return `Poskytnete nám zápůjčku ve výši ${amount} Kč (slovy ${amountToWords(amount)}), kterou vám vrátíme nejpozději za ${duration} ${durationWord} včetně ${interestTypeWord} úroku ${interest} %, celkem tedy ${total} Kč (slovy ${amountToWords(total)}).`;
+  return {
+    durationWord,
+    interestTypeWord,
+    total,
+  };
 }
