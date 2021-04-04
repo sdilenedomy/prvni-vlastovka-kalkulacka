@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box, Button, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
-import Fields from './Fields';
+import { Form, Formik, useFormikContext } from 'formik';
+import * as yup from 'yup';
+import FormikFields from './FormikFields';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,24 +29,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function AutoSubmit() {
+  const {
+    values,
+    submitForm,
+  } = useFormikContext();
+  useEffect(() => {
+    submitForm();
+  }, [values, submitForm]);
+  return null;
+}
+
 export default function Calculator({
   resultsShown,
   onSubmit,
 }) {
   const classes = useStyles();
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    errors,
-  } = useForm();
-
-  function handleFieldChange() {
-    if (resultsShown) {
-      handleSubmit(onSubmit)();
-    }
-  }
 
   return (
     <Box className={classes.root} flexGrow="1">
@@ -58,26 +57,48 @@ export default function Calculator({
             </Typography>
           </Paper>
 
-          <Fields
-            onChange={handleFieldChange}
-            register={register}
-            setValue={setValue}
-            errors={errors}
-          />
-
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="flex-end"
-            flexGrow="1"
+          <Formik
+            initialValues={{
+              amount: '', duration: 1, interest_type: '', interest: '',
+            }}
+            validationSchema={yup.object({
+              amount: yup.number()
+                .min(5000, 'Minimální částka je 5000 Kč')
+                .required('Zadejte prosím částku'),
+              duration: yup.number()
+                .required('Zvolte prosím trvání půjčky')
+                .min(1)
+                .max(15),
+              interest_type: yup.string()
+                .required(),
+              interest: yup.number()
+                .required(),
+            })}
+            onSubmit={onSubmit}
           >
-            {resultsShown ? (
-              <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
-            ) : (
-              <Button onClick={handleSubmit(onSubmit)}>Spočítat</Button>
-            )}
-          </Box>
-
+            {((formikValues) => (
+              <Form>
+                <Box display="flex" flexDirection="column">
+                  <FormikFields formikValues={formikValues} />
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="flex-end"
+                  flexGrow="1"
+                >
+                  {resultsShown ? (
+                    <>
+                      <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
+                      <AutoSubmit />
+                    </>
+                  ) : (
+                    <Button type="submit">Spočítat</Button>
+                  )}
+                </Box>
+              </Form>
+            ))}
+          </Formik>
         </Box>
       </Paper>
     </Box>

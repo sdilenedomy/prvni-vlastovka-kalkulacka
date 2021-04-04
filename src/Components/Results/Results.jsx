@@ -182,9 +182,9 @@ export default function Results({ values }) {
 
 Results.propTypes = {
   values: PropTypes.shape({
-    amount: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
     interest_type: PropTypes.string.isRequired,
     interest: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
+    duration: PropTypes.number.isRequired,
   }).isRequired,
 };
