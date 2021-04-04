@@ -19,27 +19,26 @@ import { useSnackbar } from 'notistack';
 import ResultsSummary from './ResultsSummary';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 'min-content',
-    maxWidth: '100%',
-    margin: [theme.spacing(3.25), theme.spacing(2), 0, theme.spacing(2), ''].join('px '),
+  wrapper: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(4),
   },
   results: {
     padding: theme.spacing(2),
-    height: '100%',
-  },
-  body: {
-    height: '100%',
   },
   title: {
-    marginTop: '-30px',
+    marginTop: theme.spacing(-4),
     padding: theme.spacing(2),
   },
-  buttonPadding: {
-    paddingRight: theme.spacing(2),
+  summary: {
+    marginTop: theme.spacing(2),
   },
-  resultsText: {
-    padding: theme.spacing(2),
+  downloadButton: {
+    marginRight: theme.spacing(1),
+    textDecoration: 'none',
+  },
+  buttonsWrapper: {
+    paddingTop: theme.spacing(2),
   },
   captcha: {
     paddingTop: theme.spacing(2),
@@ -47,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Results({ values }) {
+  // eslint-disable-next-line no-unused-vars
   const classes = useStyles();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -102,38 +102,33 @@ export default function Results({ values }) {
   }
 
   return (
-    <>
-      <Box className={classes.root} flexGrow="3">
-        <Paper className={classes.results}>
-          <Box display="flex" flexDirection="column" className={classes.body}>
+    <div className={classes.wrapper}>
+      <Paper className={classes.results}>
 
-            <Paper className={classes.title}>
-              <Typography variant="h5" component="h1" align="center">
-                Výsledky
-              </Typography>
-            </Paper>
-
-            <div className={classes.resultsText}>
-              <ResultsSummary values={values} />
-            </div>
-
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              alignItems="flex-end"
-              flexGrow="1"
-            >
-              <div className={classes.buttonPadding}>
-                <a href="smlouva.odt" style={{ 'text-decoration': 'none' }}>
-                  <Button>Stáhnout smlouvu</Button>
-                </a>
-              </div>
-              <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
-            </Box>
-
-          </Box>
+        <Paper>
+          <Typography variant="h5" component="h1" align="center" className={classes.title}>
+            Výsledky
+          </Typography>
         </Paper>
-      </Box>
+
+        <div className={classes.summary}>
+          <ResultsSummary values={values} />
+        </div>
+
+        <Box
+          className={classes.buttonsWrapper}
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          flexGrow="1"
+        >
+          <a href="smlouva.odt" className={classes.downloadButton}>
+            <Button>Stáhnout smlouvu</Button>
+          </a>
+          <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
+        </Box>
+
+      </Paper>
 
       <Dialog open={submitOfferDialogOpen} onClose={closeOfferSubmitDialog}>
         <DialogTitle>Nezávazně odeslat nabídku</DialogTitle>
@@ -176,7 +171,7 @@ export default function Results({ values }) {
 
       </Dialog>
 
-    </>
+    </div>
   );
 }
 
