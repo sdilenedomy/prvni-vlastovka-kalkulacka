@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Box,
-  Button, Paper, Typography,
+  Button, Grid, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, useFormikContext } from 'formik';
@@ -10,11 +10,10 @@ import * as yup from 'yup';
 import FormikFields from './FormikFields';
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(4),
-  },
   calculator: {
+    height: '100%',
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(4),
     padding: theme.spacing(2),
   },
   title: {
@@ -22,7 +21,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   buttonsWrapper: {
-    paddingTop: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  formFields: {
+    marginTop: theme.spacing(2),
+  },
+  content: {
+    height: '100%',
+  },
+  rootSingle: {
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '40%',
+    },
+  },
+  root: {
+
   },
 }));
 
@@ -44,61 +57,67 @@ export default function Calculator({
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.calculator}>
+    <Grid item xs={12} sm={5} lg={4}>
+      <Box display="flex" flexDirection="column" className={classes.content}>
+        <Paper className={classes.calculator}>
+          <Box display="flex" flexDirection="column" className={classes.content}>
+            <Paper className={classes.title}>
+              <Typography variant="h5" component="h1" align="center">
+                Kalkulačka
+              </Typography>
+            </Paper>
 
-        <Paper className={classes.title}>
-          <Typography variant="h5" component="h1" align="center">
-            Kalkulačka
-          </Typography>
+            <Formik
+              initialValues={{
+                amount: '', duration: 1, interest_type: '', interest: '',
+              }}
+              validationSchema={yup.object({
+                amount: yup.number()
+                  .min(5000, 'Minimální částka je 5000 Kč')
+                  .required('Zadejte prosím částku'),
+                duration: yup.number()
+                  .required('Zvolte prosím trvání půjčky')
+                  .min(1)
+                  .max(15),
+                interest_type: yup.string()
+                  .required(),
+                interest: yup.number()
+                  .required(),
+              })}
+              onSubmit={onSubmit}
+            >
+              {((formikValues) => (
+                <Form className={classes.content}>
+                  <Box display="flex" flexDirection="column" className={classes.content}>
+
+                    <div className={classes.formFields}>
+                      <FormikFields formikValues={formikValues} />
+                    </div>
+
+                    <Box
+                      className={classes.buttonsWrapper}
+                      display="flex"
+                      justifyContent="flex-end"
+                      alignItems="flex-end"
+                      flexGrow="1"
+                    >
+                      {resultsShown ? (
+                        <>
+                          <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
+                          <AutoSubmit />
+                        </>
+                      ) : (
+                        <Button type="submit">Spočítat</Button>
+                      )}
+                    </Box>
+                  </Box>
+                </Form>
+              ))}
+            </Formik>
+          </Box>
         </Paper>
-
-        <Formik
-          initialValues={{
-            amount: '', duration: 1, interest_type: '', interest: '',
-          }}
-          validationSchema={yup.object({
-            amount: yup.number()
-              .min(5000, 'Minimální částka je 5000 Kč')
-              .required('Zadejte prosím částku'),
-            duration: yup.number()
-              .required('Zvolte prosím trvání půjčky')
-              .min(1)
-              .max(15),
-            interest_type: yup.string()
-              .required(),
-            interest: yup.number()
-              .required(),
-          })}
-          onSubmit={onSubmit}
-        >
-          {((formikValues) => (
-            <Form>
-
-              <FormikFields formikValues={formikValues} />
-
-              <Box
-                className={classes.buttonsWrapper}
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="flex-end"
-                flexGrow="1"
-              >
-                {resultsShown ? (
-                  <>
-                    <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
-                    <AutoSubmit />
-                  </>
-                ) : (
-                  <Button type="submit">Spočítat</Button>
-                )}
-              </Box>
-
-            </Form>
-          ))}
-        </Formik>
-      </Paper>
-    </div>
+      </Box>
+    </Grid>
   );
 }
 

@@ -4,9 +4,22 @@ import PropTypes from 'prop-types';
 import {
   Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import amountToWords from '../../Utils/amountToWords';
 
+const useStyles = makeStyles((theme) => ({
+  table: {
+    marginTop: theme.spacing(2),
+  },
+  summaryText: {
+    overflowWrap: 'break-word',
+    hyphens: 'auto',
+  },
+}));
+
 export default function ResultsSummary({ values }) {
+  const classes = useStyles();
+
   const {
     amount,
     interest,
@@ -27,7 +40,7 @@ export default function ResultsSummary({ values }) {
 
   return (
     <>
-      <Typography variant="h6" component="p">
+      <Typography variant="h6" component="p" className={classes.summaryText} lang="cs">
         Poskytnete nám zápůjčku ve výši <b>{amount} Kč</b> (slovy {amountToWords(amount)}),
         kterou vám vrátíme nejpozději za <b>{duration} {durationWord}</b>
         { interestType === 'end' && (
@@ -38,7 +51,7 @@ export default function ResultsSummary({ values }) {
         )}
         Celkem vám tedy vrátíme <b>{total} Kč</b> (slovy {amountToWords(total)}).
       </Typography>
-      <TableContainer component={Paper} style={{ marginTop: 20 }}>
+      <TableContainer component={Paper} className={classes.table}>
         <Table>
           <TableBody>
             <TableRow key="loan">

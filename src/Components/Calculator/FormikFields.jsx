@@ -10,7 +10,7 @@ import FormikRadioGroup from './FormikRadioGroup';
 
 const useStyles = makeStyles((theme) => ({
   field: {
-    paddingTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
 }));
 

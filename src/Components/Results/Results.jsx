@@ -7,7 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  DialogTitle, Grid,
   Paper,
   TextField,
   Typography,
@@ -19,11 +19,10 @@ import { useSnackbar } from 'notistack';
 import ResultsSummary from './ResultsSummary';
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(4),
-  },
   results: {
+    height: '100%',
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(4),
     padding: theme.spacing(2),
   },
   title: {
@@ -38,10 +37,13 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   buttonsWrapper: {
-    paddingTop: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
   captcha: {
-    paddingTop: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  content: {
+    height: '100%',
   },
 }));
 
@@ -102,33 +104,38 @@ export default function Results({ values }) {
   }
 
   return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.results}>
+    <>
+      <Grid item xs={12} sm={7} lg={8}>
+        <Box display="flex" flexDirection="column" className={classes.content}>
+          <Paper className={classes.results}>
+            <Box display="flex" flexDirection="column" className={classes.content}>
 
-        <Paper>
-          <Typography variant="h5" component="h1" align="center" className={classes.title}>
-            Výsledky
-          </Typography>
-        </Paper>
+              <Paper className={classes.title}>
+                <Typography variant="h5" component="h1" align="center">
+                  Výsledky
+                </Typography>
+              </Paper>
 
-        <div className={classes.summary}>
-          <ResultsSummary values={values} />
-        </div>
+              <div className={classes.summary}>
+                <ResultsSummary values={values} />
+              </div>
 
-        <Box
-          className={classes.buttonsWrapper}
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          flexGrow="1"
-        >
-          <a href="smlouva.odt" className={classes.downloadButton}>
-            <Button>Stáhnout smlouvu</Button>
-          </a>
-          <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
+              <Box
+                className={classes.buttonsWrapper}
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="flex-end"
+                flexGrow="1"
+              >
+                <a href="smlouva.odt" className={classes.downloadButton}>
+                  <Button>Stáhnout smlouvu</Button>
+                </a>
+                <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
+              </Box>
+            </Box>
+          </Paper>
         </Box>
-
-      </Paper>
+      </Grid>
 
       <Dialog open={submitOfferDialogOpen} onClose={closeOfferSubmitDialog}>
         <DialogTitle>Nezávazně odeslat nabídku</DialogTitle>
@@ -170,8 +177,7 @@ export default function Results({ values }) {
         </DialogActions>
 
       </Dialog>
-
-    </div>
+    </>
   );
 }
 
