@@ -29,14 +29,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     height: '100%',
   },
-  rootSingle: {
-    [theme.breakpoints.up('md')]: {
-      maxWidth: '40%',
-    },
-  },
-  root: {
-
-  },
 }));
 
 function AutoSubmit() {
