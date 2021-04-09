@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Box,
-  Button, Grid, Paper, Typography,
+  Button, Divider, Grid, Paper, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, useFormikContext } from 'formik';
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     height: '100%',
+  },
+  note: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -61,7 +64,7 @@ export default function Calculator({
 
             <Formik
               initialValues={{
-                amount: '', duration: 1, interest_type: '', interest: '',
+                amount: '', duration: 1, interest_type: '', interest: 0,
               }}
               validationSchema={yup.object({
                 amount: yup.number()
@@ -74,6 +77,8 @@ export default function Calculator({
                 interest_type: yup.string()
                   .required(),
                 interest: yup.number()
+                  .min(0)
+                  .max(3)
                   .required(),
               })}
               onSubmit={onSubmit}
@@ -85,6 +90,23 @@ export default function Calculator({
                     <div className={classes.formFields}>
                       <FormikFields formikValues={formikValues} />
                     </div>
+
+                    <Divider className={classes.note} />
+
+                    <Typography className={classes.note} color="textSecondary">
+                      Rádi byste nám poskytli půjčku za jiných podmínek? Napište nám na
+                      {' '}
+                      <a href="mailto:finance@sdilenedomy.cz">finance@sdilenedomy.cz</a>
+                      {' '}
+                      nebo volejte na XXXXXXXXX.
+                    </Typography>
+
+                    <Typography className={classes.note} color="textSecondary">
+                      Právní disclaimer lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Nunc tincidunt ante vitae massa. Maecenas aliquet accumsan leo. Class aptent
+                      taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+                    </Typography>
 
                     <Box
                       className={classes.buttonsWrapper}

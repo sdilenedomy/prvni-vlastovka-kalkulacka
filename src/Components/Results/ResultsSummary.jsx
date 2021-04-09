@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import amountToWords from '../../Utils/amountToWords';
+import conjugateYears from '../../Utils/conjugateYears';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -27,29 +28,22 @@ export default function ResultsSummary({ values }) {
     interest_type: interestType,
   } = values;
 
-  let durationWord;
-  if (duration === 1) {
-    durationWord = 'rok';
-  } else if (duration >= 2 && duration <= 4) {
-    durationWord = 'roky';
-  } else {
-    durationWord = 'let';
-  }
+  const durationWord = conjugateYears(duration);
 
   const total = Math.ceil(amount + amount * ((parseFloat(interest) * duration) / 100));
 
   return (
     <>
       <Typography variant="h6" component="p" className={classes.summaryText} lang="cs">
-        Poskytnete nám zápůjčku ve výši <b>{amount} Kč</b> (slovy {amountToWords(amount)}),
+        Poskytnete nám zápůjčku ve výši <b>{amount}&nbsp;Kč</b> (slovy {amountToWords(amount)}),
         kterou vám vrátíme nejpozději za <b>{duration} {durationWord}</b>
         { interestType === 'end' && (
-          <> spolu s úrokem <b>{interest} %</b>. </>
+          <> spolu s úrokem <b>{interest}&nbsp;%</b>. </>
         )}
         { interestType === 'yearly' && (
-          <>. Úrok ve výši <b>{interest} %</b> vám budeme vyplácet průběžně po letech. </>
+          <>. Úrok ve výši <b>{interest}&nbsp;%</b> vám budeme vyplácet průběžně po letech. </>
         )}
-        Celkem vám tedy vrátíme <b>{total} Kč</b> (slovy {amountToWords(total)}).
+        Celkem vám tedy vrátíme <b>{total}&nbsp;Kč</b> (slovy {amountToWords(total)}).
       </Typography>
       <TableContainer component={Paper} className={classes.table}>
         <Table>
@@ -57,25 +51,19 @@ export default function ResultsSummary({ values }) {
             <TableRow key="loan">
               <TableCell component="th" scope="row">Půjčíte</TableCell>
               <TableCell align="right">
-                {amount}
-                {' '}
-                Kč
+                {amount} Kč
               </TableCell>
             </TableRow>
             <TableRow key="interest">
               <TableCell component="th" scope="row">Vrátíme</TableCell>
               <TableCell align="right">
-                {total}
-                {' '}
-                Kč
+                {total} Kč
               </TableCell>
             </TableRow>
             <TableRow key="total">
               <TableCell component="th" scope="row">Rozdíl</TableCell>
               <TableCell align="right">
-                {total - amount}
-                {' '}
-                Kč
+                {total - amount} Kč
               </TableCell>
             </TableRow>
           </TableBody>

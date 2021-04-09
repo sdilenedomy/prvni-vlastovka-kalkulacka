@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DurationSlider({ value, formikSetValue, name }) {
+export default function SliderWithInput({
+  value, formikSetValue, name, min, max, step, label, endAdornment,
+}) {
   const classes = useStyles();
 
   const [hasFocus, setHasFocus] = useState(false);
@@ -31,10 +33,16 @@ export default function DurationSlider({ value, formikSetValue, name }) {
 
   const handleInputBlur = () => {
     setHasFocus(false);
-    if (value < 1) {
-      setValue(1);
-    } else if (value > 15) {
-      setValue(15);
+    const offset = value % step;
+    if (offset < step / 2) {
+      setValue(value - offset);
+    } else {
+      setValue(value + (step - offset));
+    }
+    if (value < min) {
+      setValue(min);
+    } else if (value > max) {
+      setValue(max);
     }
   };
 
@@ -45,7 +53,7 @@ export default function DurationSlider({ value, formikSetValue, name }) {
         gutterBottom
         color={hasFocus ? 'primary' : 'textSecondary'}
       >
-        Trvání půjčky v letech
+        {label}
       </Typography>
       <Grid
         container
@@ -53,18 +61,19 @@ export default function DurationSlider({ value, formikSetValue, name }) {
         alignItems="center"
         className={classes.slider}
       >
-        <Grid item xs>
+        <Grid item xs={9} sm={8} md={10} lg={10}>
           <Slider
-            value={typeof value === 'number' ? value : 0}
+            value={typeof value === 'number' ? value : min}
             onChange={handleSliderChange}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
             aria-labelledby="input-slider"
-            min={1}
-            max={15}
+            min={min}
+            max={max}
+            step={step}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3} sm={4} md={2} lg={2}>
           <Input
             value={value}
             margin="dense"
@@ -72,12 +81,13 @@ export default function DurationSlider({ value, formikSetValue, name }) {
             onFocus={() => setHasFocus(true)}
             onBlur={handleInputBlur}
             inputProps={{
-              step: 1,
-              min: 1,
-              max: 15,
+              step,
+              min,
+              max,
               type: 'number',
               'aria-labelledby': 'input-slider',
             }}
+            endAdornment={endAdornment}
           />
         </Grid>
       </Grid>
@@ -85,8 +95,17 @@ export default function DurationSlider({ value, formikSetValue, name }) {
   );
 }
 
-DurationSlider.propTypes = {
+SliderWithInput.propTypes = {
   formikSetValue: PropTypes.func.isRequired,
   value: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
+  endAdornment: PropTypes.node,
+};
+
+SliderWithInput.defaultProps = {
+  endAdornment: '',
 };

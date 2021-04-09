@@ -4,19 +4,16 @@ import {
   Box,
   Button,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle, Grid,
+  Grid,
   Paper,
-  TextField,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useSnackbar } from 'notistack';
 import ResultsSummary from './ResultsSummary';
+import SendOffer from './SendOffer';
+import ThankYou from './ThankYou';
+import Recapitulation from './Recapitulation';
 
 const useStyles = makeStyles((theme) => ({
   results: {
@@ -48,20 +45,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Results({ values }) {
-  // eslint-disable-next-line no-unused-vars
   const classes = useStyles();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const [submitOfferDialogOpen, setSubmitOfferDialogOpen] = useState(false);
-  const {
-    handleSubmit,
-    register,
-    errors,
-  } = useForm();
 
   const [hCaptchaToken, setHCaptchaToken] = useState(null);
   const hCaptchaRef = useRef(null);
+
+  const [sendOfferPhase, setSendOfferPhase] = useState(1);
 
   function resetHCaptcha() {
     hCaptchaRef.current.resetCaptcha();
@@ -69,7 +62,6 @@ export default function Results({ values }) {
   }
 
   function closeOfferSubmitDialog() {
-    resetHCaptcha();
     setSubmitOfferDialogOpen(false);
   }
 
@@ -88,8 +80,8 @@ export default function Results({ values }) {
       })
         .then((r) => {
           if (r.ok) {
-            enqueueSnackbar('Nabídka byla odeslána', { variant: 'success' });
-            closeOfferSubmitDialog();
+            resetHCaptcha();
+            setSendOfferPhase(sendOfferPhase + 1);
           } else {
             enqueueSnackbar('Došlo k chybě, zkuste to prosím později', { variant: 'error' });
             resetHCaptcha();
@@ -130,7 +122,13 @@ export default function Results({ values }) {
                 <a href="smlouva.odt" className={classes.downloadButton}>
                   <Button>Stáhnout smlouvu</Button>
                 </a>
-                <Button onClick={() => setSubmitOfferDialogOpen(true)}>Poslat nabídku</Button>
+                <Button onClick={() => {
+                  setSendOfferPhase(1);
+                  setSubmitOfferDialogOpen(true);
+                }}
+                >
+                  Poslat nabídku
+                </Button>
               </Box>
             </Box>
           </Paper>
@@ -138,44 +136,29 @@ export default function Results({ values }) {
       </Grid>
 
       <Dialog open={submitOfferDialogOpen} onClose={closeOfferSubmitDialog}>
-        <DialogTitle>Nezávazně odeslat nabídku</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Pokud chcete nezávazně odeslat nabídku družstvu, zadejte prosím svůj email.
-          </DialogContentText>
-
-          <form id="submit-offer-form" onSubmit={handleSubmit(onOfferSubmit)} noValidate>
-            <TextField
-              autoFocus
-              variant="outlined"
-              label="Váš email"
-              type="email"
-              name="email"
-              fullWidth
-              inputRef={register({
-                required: 'Zadejte prosím svou emailovou adresu',
-                // eslint-disable-next-line no-control-regex
-                pattern: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
-              })}
-              error={!!errors.email}
-              helperText={errors.email ? errors.email.message : ''}
-            />
-            <div className={classes.captcha}>
-              <HCaptcha
-                sitekey={process.env.REACT_APP_HCAPTCHA_SITEKEY}
-                onVerify={setHCaptchaToken}
-                ref={hCaptchaRef}
-              />
-            </div>
-          </form>
-
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={closeOfferSubmitDialog} color="primary">Zrušit</Button>
-          <Button type="submit" form="submit-offer-form" color="primary">Poslat nabídku</Button>
-        </DialogActions>
-
+        {sendOfferPhase === 1 && (
+          <Recapitulation
+            closeDialog={closeOfferSubmitDialog}
+            onContinue={() => setSendOfferPhase(sendOfferPhase + 1)}
+            values={values}
+          />
+        )}
+        {sendOfferPhase === 2 && (
+          <SendOffer
+            onOfferSubmit={onOfferSubmit}
+            closeDialog={() => {
+              closeOfferSubmitDialog();
+              resetHCaptcha();
+            }}
+            hCaptchaRef={hCaptchaRef}
+            setHCaptchaToken={setHCaptchaToken}
+          />
+        )}
+        {sendOfferPhase === 3 && (
+          <ThankYou
+            closeDialog={closeOfferSubmitDialog}
+          />
+        )}
       </Dialog>
     </>
   );

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'formik';
-import DurationSlider from './DurationSlider';
+import SliderWithInput from './SliderWithInput';
 import FormikRadioGroup from './FormikRadioGroup';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,40 +45,6 @@ export default function FormikFields({ formikValues }) {
         },
       ],
     },
-    {
-      label: 'Výše úroku',
-      name: 'interest',
-      options: [
-        {
-          label: '0 %',
-          value: '0',
-        },
-        {
-          label: '0.5 %',
-          value: '0.5',
-        },
-        {
-          label: '1 %',
-          value: '1',
-        },
-        {
-          label: '1.5 %',
-          value: '1.5',
-        },
-        {
-          label: '2 %',
-          value: '2',
-        },
-        {
-          label: '2.5 %',
-          value: '2.5',
-        },
-        {
-          label: '3 %',
-          value: '3',
-        },
-      ],
-    },
   ];
 
   return (
@@ -99,10 +65,25 @@ export default function FormikFields({ formikValues }) {
         />
       </FieldWrapper>
       <FieldWrapper>
-        <DurationSlider
+        <SliderWithInput
           name="duration"
           value={formikValues.values.duration}
           formikSetValue={formikValues.setFieldValue}
+          max={15}
+          min={1}
+          step={1}
+          label="Trvání půjčky v letech"
+        />
+      </FieldWrapper>
+      <FieldWrapper>
+        <SliderWithInput
+          name="interest"
+          value={formikValues.values.interest}
+          formikSetValue={formikValues.setFieldValue}
+          max={3}
+          min={0}
+          step={0.5}
+          label="Výše úroku v procentech"
         />
       </FieldWrapper>
       {radioFields.map((radioGroupProps) => (
