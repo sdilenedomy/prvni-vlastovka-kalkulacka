@@ -168,7 +168,7 @@ Results.propTypes = {
   values: PropTypes.shape({
     amount: PropTypes.number.isRequired,
     interest_type: PropTypes.string.isRequired,
-    interest: PropTypes.string.isRequired,
+    interest: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,
   }).isRequired,
 };
