@@ -102,6 +102,13 @@ export default function Calculator({
                     </Typography>
 
                     <Typography className={classes.note} color="textSecondary">
+                      Více informací o systému přímých půjček a odpovědi na často
+                      kladené otázky naleznete
+                      <a href="https://sdilenedomy.cz/prime-pujcky/">ZDE</a>
+                      .
+                    </Typography>
+
+                    <Typography className={classes.note} color="textSecondary">
                       Výpočet v kalkulačce na těchto webových stránkách je orientační a
                       není nabídkou k uzavření smlouvy, příslibem k uzavření smlouvy,
                       veřejnou nabídkou ani jakýmkoliv jiným právním jednáním
