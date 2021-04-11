@@ -104,6 +104,7 @@ export default function Calculator({
                     <Typography className={classes.note} color="textSecondary">
                       Více informací o systému přímých půjček a odpovědi na často
                       kladené otázky naleznete
+                      {' '}
                       <a href="https://sdilenedomy.cz/prime-pujcky/">ZDE</a>
                       .
                     </Typography>
