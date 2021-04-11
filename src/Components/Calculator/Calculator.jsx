@@ -98,14 +98,15 @@ export default function Calculator({
                       {' '}
                       <a href="mailto:finance@sdilenedomy.cz">finance@sdilenedomy.cz</a>
                       {' '}
-                      nebo volejte na XXXXXXXXX.
+                      nebo volejte na +420776381312.
                     </Typography>
 
                     <Typography className={classes.note} color="textSecondary">
-                      Právní disclaimer lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Nunc tincidunt ante vitae massa. Maecenas aliquet accumsan leo. Class aptent
-                      taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
-                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+                      Výpočet v kalkulačce na těchto webových stránkách je orientační a
+                      není nabídkou k uzavření smlouvy, příslibem k uzavření smlouvy,
+                      veřejnou nabídkou ani jakýmkoliv jiným právním jednáním
+                      První vlaštovky, sociálního družstva a je výhradně právně
+                      nezávazným informativním sdělením, i pokud tak není zvlášť označen.
                     </Typography>
 
                     <Box

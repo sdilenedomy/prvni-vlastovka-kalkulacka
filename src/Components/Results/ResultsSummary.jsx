@@ -38,7 +38,7 @@ export default function ResultsSummary({ values }) {
         Poskytnete nám zápůjčku ve výši <b>{amount}&nbsp;Kč</b> (slovy {amountToWords(amount)}),
         kterou vám vrátíme nejpozději za <b>{duration} {durationWord}</b>
         { interestType === 'end' && (
-          <> spolu s úrokem <b>{interest}&nbsp;%</b>. </>
+          <> spolu s ročním úrokem <b>{interest}&nbsp;%</b> (jednoduché úročení). </>
         )}
         { interestType === 'yearly' && (
           <>. Úrok ve výši <b>{interest}&nbsp;%</b> vám budeme vyplácet průběžně po letech. </>
