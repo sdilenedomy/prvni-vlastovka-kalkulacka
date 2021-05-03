@@ -83,7 +83,7 @@ export default function FormikFields({ formikValues }) {
           max={3}
           min={0}
           step={0.5}
-          label="Výše úroku v procentech"
+          label="Výše ročního úroku v procentech"
         />
       </FieldWrapper>
       {radioFields.map((radioGroupProps) => (
