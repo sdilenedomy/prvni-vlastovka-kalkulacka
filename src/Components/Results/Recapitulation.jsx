@@ -8,9 +8,11 @@ import {
   DialogTitle, Divider, Table, TableBody, TableCell, TableContainer, TableRow,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import conjugateYears from '../../Utils/conjugateYears';
+import { useTranslation } from 'react-i18next';
 
 export default function Recapitulation({ closeDialog, onContinue, values }) {
+  const { t } = useTranslation();
+
   const {
     amount,
     interest,
@@ -19,44 +21,42 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
     interest_type: interestType,
   } = values;
 
-  const durationWord = conjugateYears(duration);
-
   return (
     <>
-      <DialogTitle>Rekapitulace</DialogTitle>
+      <DialogTitle>{t('Recapitulation')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Než nabídku odešlete, zkontrolujte prosím její správnost.
+          {t('Check if correct')}
         </DialogContentText>
         <Divider />
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow key="amount">
-                <TableCell component="th" scope="row">Velikost půjčky</TableCell>
+                <TableCell component="th" scope="row">{t('Loan amount')}</TableCell>
                 <TableCell align="right">
                   {amount} Kč
                 </TableCell>
               </TableRow>
               <TableRow key="interest">
-                <TableCell component="th" scope="row">Úrok</TableCell>
+                <TableCell component="th" scope="row">{t('Interest')}</TableCell>
                 <TableCell align="right">
                   {interest} %
                 </TableCell>
               </TableRow>
               <TableRow key="duration">
-                <TableCell component="th" scope="row">Trvání</TableCell>
+                <TableCell component="th" scope="row">{t('Duration')}</TableCell>
                 <TableCell align="right">
-                  {duration} {durationWord}
+                  {t('Duration years', { count: duration })}
                 </TableCell>
               </TableRow>
               <TableRow key="interest-type">
-                <TableCell component="th" scope="row">Vyplácení</TableCell>
+                <TableCell component="th" scope="row">{t('Repayment')}</TableCell>
                 <TableCell align="right">
                   {interestType === 'end' ? (
-                    'Úrok i jistina a konci'
+                    t('Repayment type end')
                   ) : (
-                    'Úrok průběžně, jistina na konci'
+                    t('Repayment type yearly')
                   )}
                 </TableCell>
               </TableRow>
@@ -65,8 +65,8 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
         </TableContainer>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color="primary">Zrušit</Button>
-        <Button onClick={onContinue} color="primary">Pokračovat</Button>
+        <Button onClick={closeDialog} color="primary">{t('Cancel')}</Button>
+        <Button onClick={onContinue} color="primary">{t('Continue')}</Button>
       </DialogActions>
     </>
   );

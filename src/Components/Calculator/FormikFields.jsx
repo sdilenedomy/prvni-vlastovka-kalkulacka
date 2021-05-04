@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 import SliderWithInput from './SliderWithInput';
 import FormikRadioGroup from './FormikRadioGroup';
 
@@ -29,18 +30,20 @@ FieldWrapper.propTypes = {
 };
 
 export default function FormikFields({ formikValues }) {
+  const { t } = useTranslation();
+
   // eslint-disable-next-line no-unused-vars
   const radioFields = [
     {
-      label: 'Způsob vyplácení úroku',
+      label: t('Interest repayment type'),
       name: 'interest_type',
       options: [
         {
-          label: 'Úrok i jistina na konci',
+          label: t('Repayment type end'),
           value: 'end',
         },
         {
-          label: 'Úrok vyplácený po letech, jistina na konci',
+          label: t('Repayment type yearly'),
           value: 'yearly',
         },
       ],
@@ -54,7 +57,7 @@ export default function FormikFields({ formikValues }) {
           fullWidth
           id="amount"
           name="amount"
-          label="Chci vám půjčit"
+          label={t('Want to lend')}
           type="number"
           value={formikValues.values.amount}
           onChange={formikValues.handleChange}
@@ -72,7 +75,7 @@ export default function FormikFields({ formikValues }) {
           max={15}
           min={1}
           step={1}
-          label="Trvání půjčky v letech"
+          label={t('Loan duration')}
         />
       </FieldWrapper>
       <FieldWrapper>
@@ -83,7 +86,7 @@ export default function FormikFields({ formikValues }) {
           max={3}
           min={0}
           step={0.5}
-          label="Výše ročního úroku v procentech"
+          label={t('Interest amount')}
         />
       </FieldWrapper>
       {radioFields.map((radioGroupProps) => (

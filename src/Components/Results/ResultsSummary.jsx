@@ -5,8 +5,8 @@ import {
   Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import amountToWords from '../../Utils/amountToWords';
-import conjugateYears from '../../Utils/conjugateYears';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ResultsSummary({ values }) {
   const classes = useStyles();
 
+  const { t } = useTranslation();
+
   const {
     amount,
     interest,
@@ -28,40 +30,46 @@ export default function ResultsSummary({ values }) {
     interest_type: interestType,
   } = values;
 
-  const durationWord = conjugateYears(duration);
-
   const total = Math.ceil(amount + amount * ((parseFloat(interest) * duration) / 100));
+  const totalWords = amountToWords(total);
+  const amountWords = amountToWords(amount);
+
+  const summaryValues = {
+    amount,
+    amountWords,
+    duration,
+    interest,
+    total,
+    totalWords,
+  };
 
   return (
     <>
-      <Typography variant="h6" component="p" className={classes.summaryText} lang="cs">
-        Poskytnete nám zápůjčku ve výši <b>{amount}&nbsp;Kč</b> (slovy {amountToWords(amount)}),
-        kterou vám vrátíme nejpozději za <b>{duration} {durationWord}</b>
+      <Typography variant="h6" component="p" className={classes.summaryText}>
         { interestType === 'end' && (
-          <> spolu s ročním úrokem <b>{interest}&nbsp;%</b> (jednoduché úročení). </>
+          t('Summary interest type end', summaryValues)
         )}
         { interestType === 'yearly' && (
-          <>. Úrok ve výši <b>{interest}&nbsp;%</b> vám budeme vyplácet průběžně po letech. </>
+          t('Summary interest type yearly', summaryValues)
         )}
-        Celkem vám tedy vrátíme <b>{total}&nbsp;Kč</b> (slovy {amountToWords(total)}).
       </Typography>
       <TableContainer component={Paper} className={classes.table}>
         <Table>
           <TableBody>
             <TableRow key="loan">
-              <TableCell component="th" scope="row">Půjčíte</TableCell>
+              <TableCell component="th" scope="row">{t('You lend')}</TableCell>
               <TableCell align="right">
                 {amount} Kč
               </TableCell>
             </TableRow>
             <TableRow key="interest">
-              <TableCell component="th" scope="row">Vrátíme</TableCell>
+              <TableCell component="th" scope="row">{t('We give back')}</TableCell>
               <TableCell align="right">
                 {total} Kč
               </TableCell>
             </TableRow>
             <TableRow key="total">
-              <TableCell component="th" scope="row">Rozdíl</TableCell>
+              <TableCell component="th" scope="row">{t('Difference')}</TableCell>
               <TableCell align="right">
                 {total - amount} Kč
               </TableCell>

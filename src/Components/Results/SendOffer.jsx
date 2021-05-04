@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import { Form, Formik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   captcha: {
@@ -24,12 +25,14 @@ export default function SendOffer({
 }) {
   const classes = useStyles();
 
+  const { t } = useTranslation();
+
   return (
     <>
-      <DialogTitle>Nezávazně odeslat nabídku</DialogTitle>
+      <DialogTitle>{t('Send offer heading')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Pokud chcete nezávazně odeslat nabídku družstvu, zadejte prosím svůj email.
+          {t('Enter email if want to send')}
         </DialogContentText>
 
         <Formik
@@ -38,8 +41,8 @@ export default function SendOffer({
           }}
           validationSchema={yup.object({
             email: yup.string()
-              .email('Zadejte prosím platnou emailovou adresu')
-              .required('Zadejte prosím emailovou adresu'),
+              .email(t('Enter valid email'))
+              .required(t('Enter email')),
           })}
           onSubmit={onOfferSubmit}
         >
@@ -50,7 +53,7 @@ export default function SendOffer({
                 fullWidth
                 id="email"
                 name="email"
-                label="Váš email"
+                label={t('Your email')}
                 value={formikValues.values.email}
                 onChange={formikValues.handleChange}
                 error={formikValues.touched.email && Boolean(formikValues.errors.email)}
@@ -70,8 +73,8 @@ export default function SendOffer({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={closeDialog} color="primary">Zrušit</Button>
-        <Button type="submit" form="submit-offer-form" color="primary">Poslat nabídku</Button>
+        <Button onClick={closeDialog} color="primary">{t('Cancel')}</Button>
+        <Button type="submit" form="submit-offer-form" color="primary">{t('Send offer')}</Button>
       </DialogActions>
     </>
   );

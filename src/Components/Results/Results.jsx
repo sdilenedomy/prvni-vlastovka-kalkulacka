@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import ResultsSummary from './ResultsSummary';
 import SendOffer from './SendOffer';
 import ThankYou from './ThankYou';
@@ -47,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Results({ values }) {
   const classes = useStyles();
 
+  const { t } = useTranslation();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const [submitOfferDialogOpen, setSubmitOfferDialogOpen] = useState(false);
@@ -83,15 +86,15 @@ export default function Results({ values }) {
             resetHCaptcha();
             setSendOfferPhase(sendOfferPhase + 1);
           } else {
-            enqueueSnackbar('Došlo k chybě, zkuste to prosím později', { variant: 'error' });
+            enqueueSnackbar(t('Error try again'), { variant: 'error' });
             resetHCaptcha();
           }
         }).catch(() => {
-          enqueueSnackbar('Došlo k chybě, zkuste to prosím později', { variant: 'error' });
+          enqueueSnackbar(t('Error try again'), { variant: 'error' });
           resetHCaptcha();
         });
     } else {
-      enqueueSnackbar('Vyplňte prosím hCapthu', { variant: 'error' });
+      enqueueSnackbar(t('Fill hCaptcha'), { variant: 'error' });
     }
   }
 
@@ -104,7 +107,7 @@ export default function Results({ values }) {
 
               <Paper className={classes.title}>
                 <Typography variant="h5" component="h1" align="center">
-                  Výsledky
+                  {t('Results')}
                 </Typography>
               </Paper>
 
@@ -120,14 +123,14 @@ export default function Results({ values }) {
                 flexGrow="1"
               >
                 <a href="smlouva.odt" className={classes.downloadButton}>
-                  <Button>Stáhnout smlouvu</Button>
+                  <Button>{t('Download contract')}</Button>
                 </a>
                 <Button onClick={() => {
                   setSendOfferPhase(1);
                   setSubmitOfferDialogOpen(true);
                 }}
                 >
-                  Poslat nabídku
+                  {t('Send offer')}
                 </Button>
               </Box>
             </Box>

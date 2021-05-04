@@ -7,18 +7,21 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 export default function ThankYou({ closeDialog }) {
+  const { t } = useTranslation();
+
   return (
     <>
-      <DialogTitle>Děkujeme!</DialogTitle>
+      <DialogTitle>{t('Thank you!')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Nabídka byla odeslána. Nejpozději do 24 hodin se vám ozveme na uvedenou emailovou adresu.
+          {t('In 24 hours')}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color="primary">Budiž</Button>
+        <Button onClick={closeDialog} color="primary">{t('Ok')}</Button>
       </DialogActions>
     </>
   );

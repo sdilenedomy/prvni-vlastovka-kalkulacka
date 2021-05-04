@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   Box,
   Button, Divider, Grid, Paper, Typography,
@@ -51,6 +53,8 @@ export default function Calculator({
 }) {
   const classes = useStyles();
 
+  const { t } = useTranslation();
+
   return (
     <Grid item xs={12} sm={5} lg={4}>
       <Box display="flex" flexDirection="column" className={classes.content}>
@@ -58,7 +62,7 @@ export default function Calculator({
           <Box display="flex" flexDirection="column" className={classes.content}>
             <Paper className={classes.title}>
               <Typography variant="h5" component="h1" align="center">
-                Kalkulačka
+                {t('Calculator')}
               </Typography>
             </Paper>
 
@@ -68,10 +72,10 @@ export default function Calculator({
               }}
               validationSchema={yup.object({
                 amount: yup.number()
-                  .min(5000, 'Minimální částka je 5000 Kč')
-                  .required('Zadejte prosím částku'),
+                  .min(5000, t('Lowest amount'))
+                  .required(t('Enter value')),
                 duration: yup.number()
-                  .required('Zvolte prosím trvání půjčky')
+                  .required(t('Select duration'))
                   .min(1)
                   .max(15),
                 interest_type: yup.string()
@@ -94,27 +98,19 @@ export default function Calculator({
                     <Divider className={classes.note} />
 
                     <Typography className={classes.note} color="textSecondary">
-                      Rádi byste nám poskytli půjčku za jiných podmínek? Napište nám na
-                      {' '}
-                      <a href="mailto:finance@sdilenedomy.cz">finance@sdilenedomy.cz</a>
-                      {' '}
-                      nebo volejte na +420776381312.
+                      <Trans i18nKey="Different terms">
+                        Different terms <a href={`mailto:${t('Different terms email')}`}>email</a> call.
+                      </Trans>
                     </Typography>
 
                     <Typography className={classes.note} color="textSecondary">
-                      Více informací o systému přímých půjček a odpovědi na často
-                      kladené otázky naleznete
-                      {' '}
-                      <a href="https://sdilenedomy.cz/prime-pujcky/">ZDE</a>
-                      .
+                      <Trans i18nKey="More info">
+                        More info <a href={t('More info link')}>HERE</a>
+                      </Trans>
                     </Typography>
 
                     <Typography className={classes.note} color="textSecondary">
-                      Výpočet v kalkulačce na těchto webových stránkách je orientační a
-                      není nabídkou k uzavření smlouvy, příslibem k uzavření smlouvy,
-                      veřejnou nabídkou ani jakýmkoliv jiným právním jednáním
-                      První vlaštovky, sociálního družstva a je výhradně právně
-                      nezávazným informativním sdělením, i pokud tak není zvlášť označen.
+                      {t('Disclaimer')}
                     </Typography>
 
                     <Box
@@ -126,11 +122,11 @@ export default function Calculator({
                     >
                       {resultsShown ? (
                         <>
-                          <p>Výsledky se automaticky změní podle zadaných hodnot.</p>
+                          <p>{t('Results automatic')}</p>
                           <AutoSubmit />
                         </>
                       ) : (
-                        <Button type="submit">Spočítat</Button>
+                        <Button type="submit">{t('Calculate')}</Button>
                       )}
                     </Box>
                   </Box>
