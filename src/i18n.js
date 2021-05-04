@@ -8,7 +8,7 @@ const tranlsationsLoaded = i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    supportedLngs: ['cs', 'de'],
+    supportedLngs: ['cs'],
     fallbackLng: {
       default: [process.env.REACT_APP_DEFAULT_LANG],
     },
@@ -23,6 +23,7 @@ i18n.on('languageChanged', (lng) => {
   const urlLang = window.location.pathname.match(/\/([a-zA-Z-]*)/g)[process.env.REACT_APP_LANG_PATH_INDEX]
     .replace('/', '');
   if (urlLang !== lng) {
+    // replace the language in the URL with the language used
     window.history.replaceState({}, '', lng);
   }
 
