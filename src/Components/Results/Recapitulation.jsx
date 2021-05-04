@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import {
   Button,
@@ -17,7 +16,6 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
     amount,
     interest,
     duration,
-    // eslint-disable-next-line no-unused-vars
     interest_type: interestType,
   } = values;
 

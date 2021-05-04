@@ -32,7 +32,6 @@ FieldWrapper.propTypes = {
 export default function FormikFields({ formikValues }) {
   const { t } = useTranslation();
 
-  // eslint-disable-next-line no-unused-vars
   const radioFields = [
     {
       label: t('Interest repayment type'),
@@ -93,7 +92,6 @@ export default function FormikFields({ formikValues }) {
         <FieldWrapper key={radioGroupProps.name}>
           <Field name={radioGroupProps.name}>
             {({ field, form }) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
               <FormikRadioGroup {...radioGroupProps} field={field} form={form} />
             )}
           </Field>

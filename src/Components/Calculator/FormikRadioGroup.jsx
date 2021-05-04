@@ -12,7 +12,6 @@ export default function FormikRadioGroup({
   return (
     <FormControl component="fieldset" error={form.touched[name] && form.errors[name]}>
       <FormLabel component="legend">{label}</FormLabel>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <RadioGroup {...field} name={name}>
         {options.map((option) => (
           <FormControlLabel
