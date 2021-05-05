@@ -13,6 +13,7 @@ import { Form, Formik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const useStyles = makeStyles((theme) => ({
   captcha: {
@@ -64,6 +65,7 @@ export default function SendOffer({
                 <HCaptcha
                   sitekey={process.env.REACT_APP_HCAPTCHA_SITEKEY}
                   onVerify={setHCaptchaToken}
+                  languageOverride={i18next.language}
                   ref={hCaptchaRef}
                 />
               </div>
