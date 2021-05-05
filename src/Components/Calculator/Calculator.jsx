@@ -55,7 +55,7 @@ export default function Calculator({
   const { t } = useTranslation();
 
   return (
-    <Grid item xs={12} sm={5} lg={4}>
+    <Grid item xs={12} sm={6} lg={4}>
       <Box display="flex" flexDirection="column" className={classes.content}>
         <Paper className={classes.calculator}>
           <Box display="flex" flexDirection="column" className={classes.content}>

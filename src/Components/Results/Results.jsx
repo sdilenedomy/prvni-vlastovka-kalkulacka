@@ -100,7 +100,7 @@ export default function Results({ values }) {
 
   return (
     <>
-      <Grid item xs={12} sm={7} lg={8}>
+      <Grid item xs={12} sm={6}>
         <Box display="flex" flexDirection="column" className={classes.content}>
           <Paper className={classes.results}>
             <Box display="flex" flexDirection="column" className={classes.content}>
