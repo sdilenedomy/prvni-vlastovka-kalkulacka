@@ -1,17 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  InputAdornment, TextField,
+  TextField,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import SliderWithInput from './SliderWithInput';
 import FormikRadioGroup from './FormikRadioGroup';
 
 const useStyles = makeStyles((theme) => ({
   field: {
     marginTop: theme.spacing(2),
+  },
+  amountField: {
+    display: 'flex',
+  },
+  currency: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -30,6 +38,8 @@ FieldWrapper.propTypes = {
 };
 
 export default function FormikFields({ formikValues }) {
+  const classes = useStyles();
+
   const { t } = useTranslation();
 
   const radioFields = [
@@ -52,19 +62,38 @@ export default function FormikFields({ formikValues }) {
   return (
     <>
       <FieldWrapper>
-        <TextField
-          fullWidth
-          id="amount"
-          name="amount"
-          label={t('Want to lend')}
-          type="number"
-          value={formikValues.values.amount}
-          onChange={formikValues.handleChange}
-          error={formikValues.touched.amount && Boolean(formikValues.errors.amount)}
-          helperText={formikValues.touched.amount && formikValues.errors.amount}
-          InputProps={{ endAdornment: <InputAdornment position="end">Kč</InputAdornment> }}
-          variant="outlined"
-        />
+        <div
+          className={classes.amountField}
+        >
+          <TextField
+            fullWidth
+            id="amount"
+            name="amount"
+            label={t('Want to lend')}
+            type="number"
+            value={formikValues.values.amount}
+            onChange={formikValues.handleChange}
+            error={formikValues.touched.amount && Boolean(formikValues.errors.amount)}
+            helperText={formikValues.touched.amount && formikValues.errors.amount}
+            variant="outlined"
+          />
+          <ToggleButtonGroup
+            value={formikValues.values.currency}
+            onChange={(_, newValue) => {
+              if (newValue) {
+                formikValues.setFieldValue('currency', newValue);
+              }
+            }}
+            onBlur={formikValues.handleBlur('currency')}
+            name="currency"
+            className={classes.currency}
+            exclusive
+          >
+            {JSON.parse(process.env.REACT_APP_CURRENCIES).map((currency) => (
+              <ToggleButton key={currency} value={currency}>{currency}</ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </div>
       </FieldWrapper>
       <FieldWrapper>
         <SliderWithInput
