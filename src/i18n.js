@@ -8,13 +8,13 @@ const tranlsationsLoaded = i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    supportedLngs: ['cs'],
+    supportedLngs: JSON.parse(process.env.REACT_APP_SUPPORTED_LANGS),
     fallbackLng: {
       default: [process.env.REACT_APP_DEFAULT_LANG],
     },
     debug: process.env.NODE_ENV === 'development',
     detection: {
-      order: ['path', 'navigator'],
+      order: ['path', 'localStorage', 'navigator'],
       lookupFromPathIndex: process.env.REACT_APP_LANG_PATH_INDEX,
     },
   });
