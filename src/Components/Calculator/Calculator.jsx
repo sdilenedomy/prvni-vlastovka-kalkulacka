@@ -115,7 +115,7 @@ export default function Calculator({
                     <Box
                       className={classes.buttonsWrapper}
                       display="flex"
-                      justifyContent="flex-end"
+                      justifyContent={resultsShown ? 'center' : 'flex-end'}
                       alignItems="flex-end"
                       flexGrow="1"
                     >
