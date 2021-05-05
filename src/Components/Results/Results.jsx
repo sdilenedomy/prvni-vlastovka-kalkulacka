@@ -106,7 +106,7 @@ export default function Results({ values }) {
             <Box display="flex" flexDirection="column" className={classes.content}>
 
               <Paper className={classes.title}>
-                <Typography variant="h5" component="h1" align="center">
+                <Typography variant="h5" component="h2" align="center">
                   {t('Results')}
                 </Typography>
               </Paper>

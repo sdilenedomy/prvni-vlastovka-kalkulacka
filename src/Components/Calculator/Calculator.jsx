@@ -54,25 +54,29 @@ export default function Calculator({
 
   const { t } = useTranslation();
 
+  const defaultCurrency = JSON.parse(process.env.REACT_APP_CURRENCIES)[0];
+
   return (
     <Grid item xs={12} sm={6} lg={4}>
       <Box display="flex" flexDirection="column" className={classes.content}>
         <Paper className={classes.calculator}>
           <Box display="flex" flexDirection="column" className={classes.content}>
             <Paper className={classes.title}>
-              <Typography variant="h5" component="h1" align="center">
+              <Typography variant="h5" component="h2" align="center">
                 {t('Calculator')}
               </Typography>
             </Paper>
 
             <Formik
               initialValues={{
-                amount: '', duration: 1, interest_type: '', interest: 0,
+                amount: '', currency: defaultCurrency, duration: 1, interest_type: '', interest: 0,
               }}
               validationSchema={yup.object({
                 amount: yup.number()
                   .min(5000, t('Lowest amount'))
                   .required(t('Enter value')),
+                currency: yup.string()
+                  .required(),
                 duration: yup.number()
                   .required(t('Select duration'))
                   .min(1)
