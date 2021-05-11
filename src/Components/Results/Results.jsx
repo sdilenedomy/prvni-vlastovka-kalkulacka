@@ -122,7 +122,7 @@ export default function Results({ values }) {
                 alignItems="flex-end"
                 flexGrow="1"
               >
-                <a href="smlouva.odt" className={classes.downloadButton}>
+                <a href="smlouva_vzor.pdf" className={classes.downloadButton}>
                   <Button>{t('Download contract')}</Button>
                 </a>
                 <Button onClick={() => {
