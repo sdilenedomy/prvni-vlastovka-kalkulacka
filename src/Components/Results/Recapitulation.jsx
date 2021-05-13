@@ -14,6 +14,7 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
 
   const {
     amount,
+    currency,
     interest,
     duration,
     interest_type: interestType,
@@ -33,7 +34,7 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
               <TableRow key="amount">
                 <TableCell component="th" scope="row">{t('Loan amount')}</TableCell>
                 <TableCell align="right">
-                  {amount} Kč
+                  {amount} {currency}
                 </TableCell>
               </TableRow>
               <TableRow key="interest">
@@ -75,6 +76,7 @@ Recapitulation.propTypes = {
   onContinue: PropTypes.func.isRequired,
   values: PropTypes.shape({
     amount: PropTypes.number.isRequired,
+    currency: PropTypes.string.isRequired,
     interest_type: PropTypes.string.isRequired,
     interest: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,

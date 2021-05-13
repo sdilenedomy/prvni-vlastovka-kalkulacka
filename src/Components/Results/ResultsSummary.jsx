@@ -24,14 +24,15 @@ export default function ResultsSummary({ values }) {
 
   const {
     amount,
+    currency,
     interest,
     duration,
     interest_type: interestType,
   } = values;
 
   const total = Math.ceil(amount + amount * ((parseFloat(interest) * duration) / 100));
-  const totalWords = amountToWords(total);
-  const amountWords = amountToWords(amount);
+  const totalWords = amountToWords(total, currency);
+  const amountWords = amountToWords(amount, currency);
 
   const summaryValues = {
     amount,
@@ -40,6 +41,7 @@ export default function ResultsSummary({ values }) {
     interest,
     total,
     totalWords,
+    currency,
   };
 
   return (
@@ -58,19 +60,19 @@ export default function ResultsSummary({ values }) {
             <TableRow key="loan">
               <TableCell component="th" scope="row">{t('You lend')}</TableCell>
               <TableCell align="right">
-                {amount} Kč
+                {amount} {currency}
               </TableCell>
             </TableRow>
             <TableRow key="interest">
               <TableCell component="th" scope="row">{t('We give back')}</TableCell>
               <TableCell align="right">
-                {total} Kč
+                {total} {currency}
               </TableCell>
             </TableRow>
             <TableRow key="total">
               <TableCell component="th" scope="row">{t('Difference')}</TableCell>
               <TableCell align="right">
-                {total - amount} Kč
+                {total - amount} {currency}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -83,6 +85,7 @@ export default function ResultsSummary({ values }) {
 ResultsSummary.propTypes = {
   values: PropTypes.shape({
     amount: PropTypes.number.isRequired,
+    currency: PropTypes.string.isRequired,
     interest_type: PropTypes.string.isRequired,
     interest: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,

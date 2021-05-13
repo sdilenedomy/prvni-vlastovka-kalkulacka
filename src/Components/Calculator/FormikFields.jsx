@@ -37,7 +37,7 @@ FieldWrapper.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default function FormikFields({ formikValues }) {
+export default function FormikFields({ formikValues, setUserCurrency }) {
   const classes = useStyles();
 
   const { t } = useTranslation();
@@ -81,6 +81,7 @@ export default function FormikFields({ formikValues }) {
             value={formikValues.values.currency}
             onChange={(_, newValue) => {
               if (newValue) {
+                setUserCurrency(newValue);
                 formikValues.setFieldValue('currency', newValue);
               }
             }}
@@ -133,4 +134,5 @@ export default function FormikFields({ formikValues }) {
 FormikFields.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   formikValues: PropTypes.object.isRequired,
+  setUserCurrency: PropTypes.func.isRequired,
 };

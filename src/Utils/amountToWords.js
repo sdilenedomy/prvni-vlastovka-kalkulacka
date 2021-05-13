@@ -158,20 +158,29 @@ function radSlovne(cislo, rad) {
 /**
  * Vyskloňuje koruny: 1 koruna; 2-4 koruny; 0, 5, 6, ... korun
  * @param {number} cislo
+ * @param {string} mena
  * @return {string}
  */
-function sklonujKoruny(cislo) {
-  if (cislo === 1) return ('koruna česká');
-  if (cislo === 2 || cislo === 3 || cislo === 4) return ('koruny české');
-  return ('korun českých');
+function sklonujMenu(cislo, mena) {
+  if (mena === 'Kč') {
+    if (cislo === 1) return ('koruna česká');
+    if (cislo === 2 || cislo === 3 || cislo === 4) return ('koruny české');
+    return ('korun českých');
+  } if (mena === 'EUR') {
+    if (cislo === 1) return ('euro');
+    if (cislo === 2 || cislo === 3 || cislo === 4) return ('eura');
+    return ('eur');
+  }
+  return ('');
 }
 
 /**
  * Funkce na převod čísla na slovo se skloňováním
  * @param {number} cislo
+ * @param {string} mena
  * @return {string}
  */
-function prevedNaSlovo(cislo) {
+function prevedNaSlovo(cislo, mena) {
   if (cislo === 0) return 'nula korun českých'; // nulu ošetříme ručně
 
   let slovne = '';
@@ -218,11 +227,11 @@ function prevedNaSlovo(cislo) {
     }
   }
 
-  return `${slovne} ${sklonujKoruny(cislo)}`;
+  return `${slovne} ${sklonujMenu(cislo, mena)}`;
 }
 
-export default function amountToWords(number) {
-  return prevedNaSlovo(parseInt(number, 10));
+export default function amountToWords(number, currency) {
+  return prevedNaSlovo(parseInt(number, 10), currency);
 }
 
 // console.log(prevedNaSlovo(process.argv.slice(2)[0]));

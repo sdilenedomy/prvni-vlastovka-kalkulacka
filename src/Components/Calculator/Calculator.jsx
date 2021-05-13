@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import {
   Box,
@@ -46,6 +46,14 @@ function AutoSubmit() {
   return null;
 }
 
+function AutoCurrencyRevalidate({ userCurrency }) {
+  const { validateForm } = useFormikContext();
+  useEffect(() => {
+    validateForm();
+  }, [userCurrency, validateForm]);
+  return null;
+}
+
 export default function Calculator({
   resultsShown,
   onSubmit,
@@ -54,7 +62,9 @@ export default function Calculator({
 
   const { t } = useTranslation();
 
-  const defaultCurrency = JSON.parse(process.env.REACT_APP_CURRENCIES)[0];
+  const possibleCurrencies = JSON.parse(process.env.REACT_APP_CURRENCIES);
+  const defaultCurrency = possibleCurrencies[0];
+  const [userCurrency, setUserCurrency] = useState(defaultCurrency);
 
   return (
     <Grid item xs={12} sm={6} lg={4}>
@@ -73,7 +83,14 @@ export default function Calculator({
               }}
               validationSchema={yup.object({
                 amount: yup.number()
-                  .min(5000, t('Lowest amount'))
+                  .min(
+                    JSON.parse(process.env.REACT_APP_MIN_AMOUNTS)[
+                      possibleCurrencies.indexOf(userCurrency)],
+                    t('Lowest amount', {
+                      amount: `${JSON.parse(process.env.REACT_APP_MIN_AMOUNTS)[
+                        possibleCurrencies.indexOf(userCurrency)]} ${userCurrency}`,
+                    }),
+                  )
                   .required(t('Enter value')),
                 currency: yup.string()
                   .required(),
@@ -95,7 +112,7 @@ export default function Calculator({
                   <Box display="flex" flexDirection="column" className={classes.content}>
 
                     <div className={classes.formFields}>
-                      <FormikFields formikValues={formikValues} />
+                      <FormikFields formikValues={formikValues} setUserCurrency={setUserCurrency} />
                     </div>
 
                     <Divider className={classes.note} />
@@ -129,7 +146,10 @@ export default function Calculator({
                           <AutoSubmit />
                         </>
                       ) : (
-                        <Button type="submit">{t('Calculate')}</Button>
+                        <>
+                          <Button type="submit">{t('Calculate')}</Button>
+                          <AutoCurrencyRevalidate userCurrency={userCurrency} />
+                        </>
                       )}
                     </Box>
                   </Box>
