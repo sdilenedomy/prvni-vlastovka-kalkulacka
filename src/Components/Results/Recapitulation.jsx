@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import localNumber from '../../Utils/localNumber';
 
 export default function Recapitulation({ closeDialog, onContinue, values }) {
   const { t } = useTranslation();
@@ -19,6 +20,9 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
     duration,
     interest_type: interestType,
   } = values;
+
+  const localAmount = localNumber(amount);
+  const localInterest = localNumber(interest);
 
   return (
     <>
@@ -34,13 +38,13 @@ export default function Recapitulation({ closeDialog, onContinue, values }) {
               <TableRow key="amount">
                 <TableCell component="th" scope="row">{t('Loan amount')}</TableCell>
                 <TableCell align="right">
-                  {amount} {currency}
+                  {localAmount} {currency}
                 </TableCell>
               </TableRow>
               <TableRow key="interest">
                 <TableCell component="th" scope="row">{t('Interest')}</TableCell>
                 <TableCell align="right">
-                  {interest} %
+                  {localInterest} %
                 </TableCell>
               </TableRow>
               <TableRow key="duration">

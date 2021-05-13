@@ -6,6 +6,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import amountToWords from '../../Utils/amountToWords';
+import localNumber from '../../Utils/localNumber';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -34,12 +35,16 @@ export default function ResultsSummary({ values }) {
   const totalWords = amountToWords(total, currency);
   const amountWords = amountToWords(amount, currency);
 
+  const localAmount = localNumber(amount);
+  const localTotal = localNumber(total);
+  const localInterest = localNumber(interest);
+
   const summaryValues = {
-    amount,
+    amount: localAmount,
     amountWords,
     duration,
-    interest,
-    total,
+    interest: localInterest,
+    total: localTotal,
     totalWords,
     currency,
   };
@@ -60,19 +65,19 @@ export default function ResultsSummary({ values }) {
             <TableRow key="loan">
               <TableCell component="th" scope="row">{t('You lend')}</TableCell>
               <TableCell align="right">
-                {amount} {currency}
+                {localAmount} {currency}
               </TableCell>
             </TableRow>
             <TableRow key="interest">
               <TableCell component="th" scope="row">{t('We give back')}</TableCell>
               <TableCell align="right">
-                {total} {currency}
+                {localTotal} {currency}
               </TableCell>
             </TableRow>
             <TableRow key="total">
               <TableCell component="th" scope="row">{t('Difference')}</TableCell>
               <TableCell align="right">
-                {total - amount} {currency}
+                {localNumber(total - amount)} {currency}
               </TableCell>
             </TableRow>
           </TableBody>

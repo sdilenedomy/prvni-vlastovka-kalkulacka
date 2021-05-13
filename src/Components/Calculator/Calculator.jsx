@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
 import FormikFields from './FormikFields';
+import localNumber from '../../Utils/localNumber';
 
 const useStyles = makeStyles((theme) => ({
   calculator: {
@@ -87,8 +88,8 @@ export default function Calculator({
                     JSON.parse(process.env.REACT_APP_MIN_AMOUNTS)[
                       possibleCurrencies.indexOf(userCurrency)],
                     t('Lowest amount', {
-                      amount: `${JSON.parse(process.env.REACT_APP_MIN_AMOUNTS)[
-                        possibleCurrencies.indexOf(userCurrency)]} ${userCurrency}`,
+                      amount: `${localNumber(JSON.parse(process.env.REACT_APP_MIN_AMOUNTS)[
+                        possibleCurrencies.indexOf(userCurrency)])} ${userCurrency}`,
                     }),
                   )
                   .required(t('Enter value')),
