@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-const tranlsationsLoaded = i18n
+const translationsLoaded = i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -29,7 +29,7 @@ i18n.on('languageChanged', (lng) => {
 
   document.documentElement.lang = lng;
 
-  tranlsationsLoaded.then(() => {
+  translationsLoaded.then(() => {
     document.title = i18n.t('Page title');
   });
 });
