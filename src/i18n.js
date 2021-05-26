@@ -24,7 +24,7 @@ i18n.on('languageChanged', (lng) => {
     .replace('/', '');
   if (urlLang !== lng) {
     // replace the language in the URL with the language used
-    window.history.replaceState({}, '', lng);
+    window.history.replaceState({}, '', `/${lng}`);
   }
 
   document.documentElement.lang = lng;
