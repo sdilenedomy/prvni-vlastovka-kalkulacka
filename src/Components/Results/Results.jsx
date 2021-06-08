@@ -77,6 +77,7 @@ export default function Results({ values }) {
         },
         body: JSON.stringify({
           ...values,
+          interest: values.interest.toFixed(1),
           contact_email: email,
           token: hCaptchaToken,
         }),

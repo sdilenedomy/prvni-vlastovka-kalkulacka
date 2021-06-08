@@ -92,6 +92,7 @@ export default function Calculator({
                         possibleCurrencies.indexOf(userCurrency)])} ${userCurrency}`,
                     }),
                   )
+                  .integer(t('Enter a whole number'))
                   .required(t('Enter value')),
                 currency: yup.string()
                   .required(),
