@@ -11,6 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import ResultsSummary from './ResultsSummary';
 import SendOffer from './SendOffer';
 import ThankYou from './ThankYou';
@@ -80,6 +81,7 @@ export default function Results({ values }) {
           interest: values.interest.toFixed(1),
           contact_email: email,
           token: hCaptchaToken,
+          lender_language: i18next.language,
         }),
       })
         .then((r) => {
