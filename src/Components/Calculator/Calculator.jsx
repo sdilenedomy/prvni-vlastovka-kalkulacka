@@ -104,7 +104,7 @@ export default function Calculator({
                   .required(),
                 interest: yup.number()
                   .min(0)
-                  .max(3)
+                  .max(5)
                   .required(),
               })}
               onSubmit={onSubmit}
