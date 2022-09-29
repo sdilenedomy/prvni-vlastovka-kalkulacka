@@ -112,7 +112,7 @@ export default function FormikFields({ formikValues, setUserCurrency }) {
           name="interest"
           value={formikValues.values.interest}
           formikSetValue={formikValues.setFieldValue}
-          max={3}
+          max={5}
           min={0}
           step={0.5}
           label={t('Interest amount')}
